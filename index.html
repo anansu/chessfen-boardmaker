@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess FEN to Board Image Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Chess FEN to Board Image Generator</h1>
+        <p>최대 12개의 FEN 코드를 아래에 한 줄씩 입력해주세요.</p>
+        <textarea id="fen-input" rows="12" placeholder="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"></textarea>
+        <button id="generate-btn">보드 이미지 생성</button>
+        <div id="output-container">
+            <canvas id="canvas" style="display: none;"></canvas>
+            <div id="image-placeholder"></div>
+            <a id="download-link" style="display: none;">Download Image</a>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
