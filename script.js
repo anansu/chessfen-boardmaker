@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // alert("Script v3 Loaded - High Res Test"); // 이전 alert는 삭제합니다.
     const generateBtn = document.getElementById('generate-btn');
     const fenInput = document.getElementById('fen-input');
     const canvas = document.getElementById('canvas');
@@ -87,14 +88,22 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const boardSize = 400; // 개별 보드 크기
-        const padding = 50;   // 보드 간 간격
-        const cols = 3;
+        const boardSize = 400; 
+        const padding = 50;   
+        const cols = 3;       
         const rows = Math.ceil(fens.length / cols);
+        const baseWidth = cols * boardSize + (cols - 1) * padding;
+        const baseHeight = rows * boardSize + (rows - 1) * padding;
+        const dpr = 2; // 강제 2배율
 
-        canvas.width = cols * boardSize + (cols - 1) * padding;
-        canvas.height = rows * boardSize + (rows - 1) * padding;
+        canvas.width = baseWidth * dpr;
+        canvas.height = baseHeight * dpr;
+        canvas.style.width = `${baseWidth}px`;
+        canvas.style.height = `${baseHeight}px`;
+        
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         for (let i = 0; i < fens.length; i++) {
             const fen = fens[i];
@@ -110,6 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const pieces = parseFen(fen);
             drawPieces(ctx, boardSize, startX, startY, pieces);
         }
+
+        // 최종 확인용 로그
+        console.log(`Final check before export. Canvas physical size: ${canvas.width}x${canvas.height}`);
 
         const dataUrl = canvas.toDataURL('image/png');
         imagePlaceholder.innerHTML = `<img src="${dataUrl}" alt="Generated Chess Boards">`;
